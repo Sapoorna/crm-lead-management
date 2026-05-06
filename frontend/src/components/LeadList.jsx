@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import './CRM.css';
 
 function LeadList() {
   const [leads, setLeads] = useState([]);
@@ -89,10 +88,10 @@ function LeadList() {
   return (
     <div>
       <div className="nav">
-        <a href="/">Dashboard</a>
-        <a href="/leads">Leads</a>
-        <a href="/leads/new">New Lead</a>
-        <button onClick={handleLogout}>Logout ({user?.name})</button>
+        <a href="/">📊 Dashboard</a>
+        <a href="/leads">📋 Leads</a>
+        <a href="/leads/new">➕ New Lead</a>
+        <button onClick={handleLogout}>🚪 Logout ({user?.name})</button>
       </div>
 
       <div className="container">
@@ -101,10 +100,9 @@ function LeadList() {
         <div className="filters">
           <input
             type="text"
-            placeholder="Search by name, company, or email..."
+            placeholder="🔍 Search by name, company, or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ flex: 2, padding: '0.5rem' }}
           />
           
           <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
@@ -152,7 +150,7 @@ function LeadList() {
           <tbody>
             {filteredLeads.map(lead => (
               <tr key={lead._id}>
-                <td>{lead.name}</td>
+                <td><strong>{lead.name}</strong></td>
                 <td>{lead.company}</td>
                 <td>{lead.email}</td>
                 <td>{lead.source}</td>
@@ -164,9 +162,9 @@ function LeadList() {
                 </td>
                 <td>${lead.deal_value?.toLocaleString() || 0}</td>
                 <td>
-                  <button onClick={() => navigate(`/leads/${lead._id}`)} style={{ marginRight: '0.5rem' }}>View</button>
-                  <button onClick={() => navigate(`/leads/${lead._id}/edit`)} style={{ marginRight: '0.5rem' }}>Edit</button>
-                  <button className="danger" onClick={() => handleDelete(lead._id)}>Delete</button>
+                  <button onClick={() => navigate(`/leads/${lead._id}`)} style={{ marginRight: '0.5rem', padding: '0.3rem 0.8rem' }}>View</button>
+                  <button onClick={() => navigate(`/leads/${lead._id}/edit`)} style={{ marginRight: '0.5rem', padding: '0.3rem 0.8rem' }}>Edit</button>
+                  <button className="danger" onClick={() => handleDelete(lead._id)} style={{ padding: '0.3rem 0.8rem' }}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -174,7 +172,7 @@ function LeadList() {
         </table>
         
         {filteredLeads.length === 0 && (
-          <p style={{ textAlign: 'center', marginTop: '2rem' }}>No leads found.</p>
+          <p style={{ textAlign: 'center', marginTop: '2rem', color: '#718096' }}>No leads found. Create your first lead!</p>
         )}
       </div>
     </div>
