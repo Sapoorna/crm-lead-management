@@ -8,8 +8,19 @@ const { initDatabase, User, Lead, Note } = require('./database');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS - allow all origins for deployment
 app.use(cors());
 app.use(express.json());
+
+// health check endpoints
+app.get('/', (req, res) => {
+  res.json({ message: 'CRM Backend is running!', status: 'ok' });
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ message: 'API is working!', timestamp: new Date() });
+});
+
 
 // Authentication middleware
 function authenticateToken(req, res, next) {
@@ -29,7 +40,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// ============ AUTH ENDPOINTS ============
+// auth endpoint
 
 app.post('/api/auth/login', async (req, res) => {
   const { email, password } = req.body;
@@ -60,7 +71,7 @@ app.post('/api/auth/login', async (req, res) => {
   });
 });
 
-// ============ LEAD ENDPOINTS ============
+// lead endpoints
 
 app.get('/api/leads', authenticateToken, async (req, res) => {
   const { status, source, salesperson, search } = req.query;
@@ -151,7 +162,7 @@ app.delete('/api/leads/:id', authenticateToken, async (req, res) => {
   res.status(204).send();
 });
 
-// ============ NOTES ENDPOINTS ============
+// notes endpoints
 
 app.get('/api/leads/:leadId/notes', authenticateToken, async (req, res) => {
   const notes = await Note.find({ lead_id: req.params.leadId }).sort({ created_date: -1 });
@@ -176,7 +187,7 @@ app.delete('/api/notes/:id', authenticateToken, async (req, res) => {
   res.status(204).send();
 });
 
-// ============ DASHBOARD STATS ============
+// dashboard stats endpoint
 
 app.get('/api/dashboard/stats', authenticateToken, async (req, res) => {
   const totalLeads = await Lead.countDocuments();
