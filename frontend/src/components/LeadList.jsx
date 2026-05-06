@@ -88,10 +88,10 @@ function LeadList() {
   return (
     <div>
       <div className="nav">
-        <a href="/">📊 Dashboard</a>
-        <a href="/leads">📋 Leads</a>
-        <a href="/leads/new">➕ New Lead</a>
-        <button onClick={handleLogout}>🚪 Logout ({user?.name})</button>
+        <a href="/">Dashboard</a>
+        <a href="/leads">Leads</a>
+        <a href="/leads/new">New Lead</a>
+        <button onClick={handleLogout}>Logout ({user?.name})</button>
       </div>
 
       <div className="container">
@@ -100,7 +100,7 @@ function LeadList() {
         <div className="filters">
           <input
             type="text"
-            placeholder="🔍 Search by name, company, or email..."
+            placeholder="Search by name, company, or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -161,10 +161,10 @@ function LeadList() {
                   </span>
                 </td>
                 <td>${lead.deal_value?.toLocaleString() || 0}</td>
-                <td>
-                  <button onClick={() => navigate(`/leads/${lead._id}`)} style={{ marginRight: '0.5rem', padding: '0.3rem 0.8rem' }}>View</button>
-                  <button onClick={() => navigate(`/leads/${lead._id}/edit`)} style={{ marginRight: '0.5rem', padding: '0.3rem 0.8rem' }}>Edit</button>
-                  <button className="danger" onClick={() => handleDelete(lead._id)} style={{ padding: '0.3rem 0.8rem' }}>Delete</button>
+                <td className="action-buttons">
+                  <button className="btn-view" onClick={() => navigate(`/leads/${lead._id}`)}>View</button>
+                  <button className="btn-edit" onClick={() => navigate(`/leads/${lead._id}/edit`)}>Edit</button>
+                  <button className="btn-delete" onClick={() => handleDelete(lead._id)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -172,7 +172,7 @@ function LeadList() {
         </table>
         
         {filteredLeads.length === 0 && (
-          <p style={{ textAlign: 'center', marginTop: '2rem', color: '#718096' }}>No leads found. Create your first lead!</p>
+          <p style={{ textAlign: 'center', marginTop: '2rem', color: '#6c757d' }}>No leads found. Create your first lead!</p>
         )}
       </div>
     </div>
